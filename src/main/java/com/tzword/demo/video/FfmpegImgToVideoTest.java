@@ -7,27 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 获取视频中某一帧的图片
+ * 把图片再合成为视频
  */
-public class FfmpegImgTest {
+public class FfmpegImgToVideoTest {
     private String ffmpegExePath;
 
-    public FfmpegImgTest(String ffmpegExePath) {
+    public FfmpegImgToVideoTest(String ffmpegExePath) {
         this.ffmpegExePath = ffmpegExePath;
     }
 
     public void convert(String inputViewPath,String outputViewPath) throws Exception {
-        //ffmpeg.exe -ss 00:00:10 -y -i d:/video/input.mp4 -vframes 1 d:/video/new2.jpg
+        //ffmpeg.exe -i d:\video_out\img\image-%3d.jpeg d:\video_out\outimg.mp4
         List<String> command = new ArrayList();
         command.add(ffmpegExePath);
-        command.add("-ss");
-        command.add("00:00:15");
-        command.add("-y");
         command.add("-i");
-        command.add(inputViewPath);
-        command.add("-vframes");
-        command.add("1");
-        command.add(outputViewPath);
+        command.add(inputViewPath);//图片地址
+        command.add(outputViewPath);//视频地址
         ProcessBuilder processBuilder = new ProcessBuilder(command);
         Process start = processBuilder.start();
         //关闭流
@@ -49,9 +44,9 @@ public class FfmpegImgTest {
     };
 
     public static void main(String[] args) {
-        FfmpegImgTest ffmpegTest = new FfmpegImgTest("D:\\ffmpeg\\bin\\ffmpeg.exe");
+        FfmpegImgToVideoTest ffmpegTest = new FfmpegImgToVideoTest("D:\\ffmpeg\\bin\\ffmpeg.exe");
         try {
-            ffmpegTest.convert("D:\\video\\input.mp4","D:\\video\\java生成的截图.jpg");
+            ffmpegTest.convert("D:\\video_out\\img2\\image-%3d.jpeg","D:\\video_out\\hecheng.mp4");
         } catch (Exception e) {
             e.printStackTrace();
         }

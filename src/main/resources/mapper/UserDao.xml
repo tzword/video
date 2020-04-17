@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tzword.demo.dao.UserDao">
+
+    <resultMap type="com.tzword.demo.entity.User" id="UserMap">
+        <result property="id" column="id" jdbcType="OTHER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="aboutme" column="aboutme" jdbcType="VARCHAR"/>
+        <result property="passwd" column="passwd" jdbcType="VARCHAR"/>
+        <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="OTHER"/>
+        <result property="createTime" column="create_time" jdbcType="OTHER"/>
+        <result property="enable" column="enable" jdbcType="OTHER"/>
+        <result property="agencyId" column="agency_id" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        select
+          id, name, phone, email, aboutme, passwd, avatar, type, create_time, enable, agency_id
+        from houses.user
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMap">
+        select
+          id, name, phone, email, aboutme, passwd, avatar, type, create_time, enable, agency_id
+        from houses.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMap">
+        select
+          id, name, phone, email, aboutme, passwd, avatar, type, create_time, enable, agency_id
+        from houses.user
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and email = #{email}
+            </if>
+            <if test="aboutme != null and aboutme != ''">
+                and aboutme = #{aboutme}
+            </if>
+            <if test="passwd != null and passwd != ''">
+                and passwd = #{passwd}
+            </if>
+            <if test="avatar != null and avatar != ''">
+                and avatar = #{avatar}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="enable != null">
+                and enable = #{enable}
+            </if>
+            <if test="agencyId != null">
+                and agency_id = #{agencyId}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into houses.user(name, phone, email, aboutme, passwd, avatar, type, create_time, enable, agency_id)
+        values (#{name}, #{phone}, #{email}, #{aboutme}, #{passwd}, #{avatar}, #{type}, #{createTime}, #{enable}, #{agencyId})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update houses.user
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="aboutme != null and aboutme != ''">
+                aboutme = #{aboutme},
+            </if>
+            <if test="passwd != null and passwd != ''">
+                passwd = #{passwd},
+            </if>
+            <if test="avatar != null and avatar != ''">
+                avatar = #{avatar},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="enable != null">
+                enable = #{enable},
+            </if>
+            <if test="agencyId != null">
+                agency_id = #{agencyId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from houses.user where id = #{id}
+    </delete>
+
+</mapper>

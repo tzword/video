@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 转换视频格式（例如mp4->avi）
+ * 把原视频的背景音乐替换为指定的音乐
  */
 public class FfmpegMergeTest {
     private String ffmpegExePath;
